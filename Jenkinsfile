@@ -20,7 +20,7 @@ pipeline{
         {
             when
             {
-                branch 'test'   
+                branch "test" 
             }
             steps
             {
