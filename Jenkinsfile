@@ -20,7 +20,7 @@ pipeline{
         {
             when
             {
-                branch 'test'   
+                branch "test" 
             }
             steps
             {
@@ -64,7 +64,7 @@ pipeline{
         }
        
          stage('Deploy App') {
-
+             when{
                 branch "prod"
                 }
       steps {
@@ -76,3 +76,4 @@ pipeline{
         
     }
 
+}
