@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: myweb
+  name: capstone
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: capstone
+  template:
+    metadata:
+      labels:
+        app: capstone
+    spec:
+      containers:
+        - image: naincykumari123/capstone:latest
+          name: myweb
+          ports:
+            - containerPort: 8081
+          env:
+          - name: SQL_URL
+            value: mysql-0.sql-headless.default.svc.cluster.local
+          - name: SQL_PORT
+            value: "3306"
+          - name: SQL_USR
+            value: "user"
+          - name: SQL_PW
+            value: "root@1234"
+          - name: SQL_TABLE
+            value: "mydb"

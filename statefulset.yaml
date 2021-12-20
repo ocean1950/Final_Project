@@ -1,0 +1,76 @@
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: sql-headless
+  labels:
+    app: myweb
+
+
+spec:
+  ports:
+  - port: 3306
+    targetPort: 3306
+    protocol: TCP
+  clusterIP: None
+  selector:
+    app: sql
+---
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast
+  
+
+provisioner: k8s.io/minikube-hostpath
+reclaimPolicy: Delete
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: myweb
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+
+    matchLabels:
+      app: sql
+  serviceName: sql-headless
+  template:
+    metadata:
+      labels:
+        app: sql
+    spec:
+      containers:
+        - image: mysql
+          imagePullPolicy: IfNotPresent
+          name: mysql
+          ports:
+            - containerPort: 3306
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: "root@1234"
+          - name: MYSQL_DATABASE
+            value: "mydb" #"db1"
+          - name: MYSQL_USER
+            value: "user"
+          - name: MYSQL_PASSWORD
+            value: "root@1234"
+          volumeMounts:
+          - name: sql-claim
+            mountPath: /var/lib/mydb
+  volumeClaimTemplates:
+  - metadata:
+      name: sql-claim
+    spec:
+      accessModes: [ReadWriteOnce]
+      storageClassName: fast
+      resources:
+        requests:
+          storage: 1Gi
+
