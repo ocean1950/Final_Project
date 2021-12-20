@@ -16,6 +16,7 @@ pipeline{
             }
         }
 
+
         stage("Testing the application")
         {
             when
@@ -38,6 +39,7 @@ pipeline{
 
                 sh 'mvn package'
 
+
             }
         }
        stage('build image')
@@ -46,7 +48,9 @@ pipeline{
                 branch "prod"
                 }
             steps{
+
                 sh 'docker build -t naincykumari123/capstone:latest .'
+
             }
         } 
         stage('pushing to dockerhub')
@@ -55,18 +59,22 @@ pipeline{
                 branch "prod"
                 }
             steps{
+
                 sh 'docker tag naincykumari123/capstone:latest naincykumari123/capstone:${GIT_COMMIT} '
                 sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
                 sh 'docker push naincykumari123/capstone:${GIT_COMMIT} '
                 sh 'docker push naincykumari123/capstone:latest '
 
+
             }
         }
        
          stage('Deploy App') {
+
              when{
                 branch "prod"
                 }
+
       steps {
            
         kubernetesDeploy configs: '**/appDeployment.yaml', kubeConfig: [path: ''], kubeconfigId: 'kube', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
@@ -75,5 +83,4 @@ pipeline{
         }
         
     }
-
-}
+        }
