@@ -16,7 +16,9 @@ COPY --from=builder /capstone/target/StudentRegistration-0.0.1-SNAPSHOT.jar  .
 
 EXPOSE 8081
 
-ENV DB_URL=localhost DB_PORT=3306 DB_USER=root DB_PW=root@1234
+
+ENV SQL_URL=localhost SQL_PORT=3306 SQL_USR=root SQL_PW=root@1234 SQL_TABLE=mydb
+
 
 ENTRYPOINT ["java","-jar"]
 
