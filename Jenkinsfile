@@ -15,6 +15,7 @@ pipeline{
                 sh 'mvn clean'
             }
         }
+
         stage("Testing the application")
         {
             when
@@ -27,13 +28,16 @@ pipeline{
             }
         }
 
+
         stage('pack')
         {
             when{
                 branch "prod"
                 }
             steps{
+
                 sh 'mvn package'
+
             }
         }
        stage('build image')
@@ -60,8 +64,7 @@ pipeline{
         }
        
          stage('Deploy App') {
-             
-            when{
+
                 branch "prod"
                 }
       steps {
