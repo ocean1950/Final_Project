@@ -49,8 +49,7 @@ pipeline{
                 }
             steps{
 
-                sh 'docker build -t naincykumari123/capstone:latest .'
-
+                sh 'docker build -t naincykumari123/capstone:${GIT_COMMIT} . '
             }
         } 
         stage('pushing to dockerhub')
@@ -60,12 +59,11 @@ pipeline{
                 }
             steps{
 
-                sh 'docker tag naincykumari123/capstone:latest naincykumari123/capstone:${GIT_COMMIT} '
-                sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
-                sh 'docker push naincykumari123/capstone:${GIT_COMMIT} '
-                sh 'docker push naincykumari123/capstone:latest '
-
-
+                sh '''
+                echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin
+                docker push naincykumari123/capstone:${GIT_COMMIT} 
+                docker logout
+                '''
             }
         }
        
@@ -83,4 +81,4 @@ pipeline{
         }
         
     }
-        }
+ }
