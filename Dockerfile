@@ -4,7 +4,7 @@ WORKDIR /capstone
 
 COPY . .
 
-RUN mvn package -DskipTests
+RUN mvn package 
 
 
 
