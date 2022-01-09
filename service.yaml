@@ -31,4 +31,11 @@ spec:
     protocol: TCP
   selector:
     app: sql
+spec:
+  ports:
+  - port: 3309
+    targetPort: 3309
+    protocol: TCP
+  selector:
+    app: sql
 
