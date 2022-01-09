@@ -1,1 +1,1 @@
-Hello everyone
+Hello everyone and hello friends
