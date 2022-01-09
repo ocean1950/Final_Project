@@ -1,0 +1,17 @@
+name: Run tests
+
+on:  
+  pull_request:
+    branches:
+      - master
+      - test
+      - prod
+      - dev
+      - feature
+
+jobs:  
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: echo "hello everyone"
