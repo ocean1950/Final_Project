@@ -32,4 +32,6 @@ spec:
             value: "root@1234"
           - name: SQL_TABLE
             value: "mydb"
+          - name: SQL_TABLE
+            value: "mydb"
 
