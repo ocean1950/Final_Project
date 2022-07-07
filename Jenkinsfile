@@ -1,8 +1,8 @@
 pipeline{
     agent any
    tools {
-       maven 'maven'
-       jdk 'Java'
+       maven 'Mymaven'
+       jdk 'null'
    }
     environment {
         dockerhub=credentials('dockerhub')
